@@ -489,6 +489,7 @@ ifeq ($(DISCORDRPC),1)
 endif
 
 # BOARDFISH: Do I need VR libraries here?
+OPENVR_LIBS := lib/openvr/openvr_api.dll
 
 # Automatic dependency files
 DEP_FILES := $(O_FILES:.o=.d) $(ULTRA_O_FILES:.o=.d) $(GODDARD_O_FILES:.o=.d) $(BUILD_DIR)/$(LD_SCRIPT).d
