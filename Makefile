@@ -48,6 +48,8 @@ TEXTSAVES ?= 0
 EXTERNAL_DATA ?= 0
 # Enable Discord Rich Presence
 DISCORDRPC ?= 0
+# Enable VR
+OPENVR ?= 1
 
 # Various workarounds for weird toolchains
 
@@ -303,6 +305,10 @@ ifeq ($(DISCORDRPC),1)
   SRC_DIRS += src/pc/discord
 endif
 
+ifeq ($(OPENVR),1)
+  SRC_DIRS += src/pc/openvr
+endif
+
 BIN_DIRS := bin bin/$(VERSION)
 
 ULTRA_SRC_DIRS := lib/src lib/src/math
@@ -482,6 +488,8 @@ ifeq ($(DISCORDRPC),1)
   endif
 endif
 
+# BOARDFISH: Do I need VR libraries here?
+
 # Automatic dependency files
 DEP_FILES := $(O_FILES:.o=.d) $(ULTRA_O_FILES:.o=.d) $(GODDARD_O_FILES:.o=.d) $(BUILD_DIR)/$(LD_SCRIPT).d
 
@@ -521,6 +529,8 @@ else ifeq ($(WINDOWS_BUILD),1)
     LD := $(CXX)
   endif
 endif
+
+# BOARDFISH: May need to do some funky stuff here if compilation fails.
 
 ifeq ($(WINDOWS_BUILD),1) # fixes compilation in MXE on Linux and WSL
   CPP := cpp -P
@@ -630,6 +640,12 @@ CC_CHECK += -DDISCORDRPC
 CFLAGS += -DDISCORDRPC
 endif
 
+# Check for OpenVR option
+ifeq ($(OPENVR),1)
+CC_CHECK += -DOPENVR
+CFLAGS += -DOPENVR
+endif
+
 # Check for texture fix option
 ifeq ($(TEXTURE_FIX),1)
   CC_CHECK += -DTEXTURE_FIX
@@ -696,6 +712,8 @@ else
   endif
 
 endif # End of LDFLAGS
+
+# BOARDFISH: Do I need to do anything here?
 
 # Prevent a crash with -sopt
 export LANG := C
@@ -863,6 +881,8 @@ ifeq ($(DISCORDRPC),1)
   $(BUILD_DIR)/src/pc/discord/discordrpc.o: $(BUILD_DIR)/include/text_strings.h
 endif
 endif
+
+# BOARDFISH: Up here's probably where stuff gets compiled. Ack...
 
 ################################################################
 # TEXTURE GENERATION                                           #

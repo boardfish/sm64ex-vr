@@ -92,6 +92,9 @@ bool         configHUD           = true;
 #ifdef DISCORDRPC
 bool         configDiscordRPC    = true;
 #endif
+#ifdef OPENVR
+bool         configOpenVR        = true;
+#endif
 
 static const struct ConfigOption options[] = {
     {.name = "fullscreen",           .type = CONFIG_TYPE_BOOL, .boolValue = &configWindow.fullscreen},
@@ -137,7 +140,10 @@ static const struct ConfigOption options[] = {
     #endif
     {.name = "skip_intro",           .type = CONFIG_TYPE_UINT, .uintValue = &configSkipIntro},    // Add this back!
 #ifdef DISCORDRPC
-    {.name = "discordrpc_enable",     .type = CONFIG_TYPE_BOOL, .boolValue = &configDiscordRPC},
+    {.name = "discordrpc_enable",    .type = CONFIG_TYPE_BOOL, .boolValue = &configDiscordRPC},
+#endif
+#ifdef OPENVR
+    {.name = "openvr_enable",        .type = CONFIG_TYPE_BOOL, .boolValue = &configOpenVR},
 #endif 
 };
 
